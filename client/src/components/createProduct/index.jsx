@@ -26,6 +26,9 @@ export function CreateProduct({ isOpen, onClose }) {
     });
   };
 
+  /**
+   * To create new post
+   */
   const handleSubmitModal = async () => {
     try {
       const response = await axios.post(
