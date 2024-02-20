@@ -22,7 +22,6 @@ export function CreateProduct({ isOpen, onClose }) {
   const onChangeProduct = (e) => {
     setProduct({
       ...product,
-
       [e.target.name]: e.target.value,
     });
   };
@@ -33,8 +32,9 @@ export function CreateProduct({ isOpen, onClose }) {
         "http://localhost:4001/v1/product/list",
         product
       );
-
-      console.log(response, "res");
+      if (response.status === 200) {
+        onClose();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +91,12 @@ export function CreateProduct({ isOpen, onClose }) {
         </Box>
         <Box>
           <FormLabel>Type of product</FormLabel>
-          <Select name="type" placeholder="Select option">
+          <Select
+            onChange={onChangeProduct}
+            value={product.type}
+            name="type"
+            placeholder="Select option"
+          >
             {productTypes?.map((type) => {
               return (
                 <option key={type._id} value={type.name}>
