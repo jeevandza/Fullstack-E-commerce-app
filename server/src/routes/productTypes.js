@@ -3,6 +3,9 @@ const ProductTypes = require("../models/Product_types.model.js");
 
 const productTypeRouter = Router();
 
+/**
+ * To create product types 
+ */
 productTypeRouter.post("", async (req, res) => {
   const { name, id } = req.body;
   const findProductType = await ProductTypes.findOne({ name });
@@ -18,6 +21,9 @@ productTypeRouter.post("", async (req, res) => {
   }
 });
 
+/**
+ * To get list of product types 
+ */
 productTypeRouter.get("", async (req, res) => {
   const findProductType = await ProductTypes.find();
 

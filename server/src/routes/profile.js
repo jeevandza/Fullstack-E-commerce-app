@@ -3,6 +3,11 @@ const User = require("../models/User.model");
 
 const profileRouter = Router();
 
+
+
+/**
+ * To get the user profile 
+ */
 profileRouter.get("/:id", async (req, res) => {
   const { id: _id } = req.body;
 

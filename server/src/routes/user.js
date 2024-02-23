@@ -4,6 +4,9 @@ const { hashPassword } = require("../utils/helper");
 
 const userRouter = Router();
 
+/**
+ * To get the list of users 
+ */
 userRouter.get("", async (req, res) => {
   const fetchUser = await User.find();
 
@@ -14,6 +17,9 @@ userRouter.get("", async (req, res) => {
   }
 });
 
+/**
+ * To get the user data based on the user id
+ */
 userRouter.get("/:id", async (req, res) => {
   const { id: _id } = req.params;
   const fetchUser = await User.findOne({ _id });
@@ -27,6 +33,10 @@ userRouter.get("/:id", async (req, res) => {
   }
 });
 
+
+/**
+ * To create user post method
+ */
 userRouter.post("", async (req, res) => {
   const { name, email, roleId, userId } = req.body;
 
@@ -46,6 +56,10 @@ userRouter.post("", async (req, res) => {
   }
 });
 
+
+/**
+ * To update specific user based on the id of the user
+ */
 userRouter.patch("/:id", async (req, res) => {
   const { id: _id } = req.params;
   const { name, email, password, isFirstTime, userId } = req.body;
@@ -70,6 +84,10 @@ userRouter.patch("/:id", async (req, res) => {
   }
 });
 
+
+/**
+ * To delete user from the database(hard delete)
+ */
 userRouter.delete("/delete/:id", async (req, res) => {
   const { id: _id } = req.params;
 

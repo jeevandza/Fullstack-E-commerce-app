@@ -3,6 +3,9 @@ const Role = require("../models/role.model");
 
 const roleRouter = Router();
 
+/**
+ * To create roles for the application
+ */
 roleRouter.post("", async (req, res) => {
   const { name, type, userId } = req.body;
 
@@ -20,6 +23,9 @@ roleRouter.post("", async (req, res) => {
   }
 });
 
+/**
+ * To get the list of the roles 
+ */
 roleRouter.get("", async (req, res) => {
   const fetchRoles = await Role.find();
   if (fetchRoles) {
