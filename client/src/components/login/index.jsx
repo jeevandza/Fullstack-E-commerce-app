@@ -16,14 +16,18 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 
 export const Login = ({ handleShowSignUp }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [signIn, setSignIn] = useState({
     name: "",
     password: "",
   });
+
+  /**
+   * Fires when user inputs data
+   */
   const handleLogin = (e) => {
     setSignIn({
       ...signIn,
@@ -31,15 +35,31 @@ export const Login = ({ handleShowSignUp }) => {
     });
   };
 
-  const handleSignIn = async() => {
+  /**
+   * Sign in user using name or email and password
+   */
+  const handleSignIn = async () => {
     try {
-      const loginUser = await axios.post("http://localhost:4001/v1/auth/login", signIn);
+      const loginUser = await axios.post(
+        "http://localhost:4001/v1/auth/login",
+        signIn
+      );
       const user = loginUser.data.data;
       const token = loginUser.data.access_token;
-      if(loginUser.status === 200){
-        localStorage.setItem('user', JSON.stringify(user))
-        localStorage.setItem('access_token', JSON.stringify(token))
-        navigate('/')
+      if (loginUser.status === 200) {
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("access_token", JSON.stringify(token));
+        navigate("/");
+        toast("Hello World", {
+          data: {
+            title: "Hello World Again",
+            text: "We are here again with another article",
+          },})
+
+
+
+
+
       }
     } catch (err) {
       console.log(err);

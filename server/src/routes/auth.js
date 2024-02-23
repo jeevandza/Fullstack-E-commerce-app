@@ -10,7 +10,8 @@ const authRouter = Router();
  */
 authRouter.post("/login", async (req, res) => {
   const { name, password } = req.body;
-  const findUser = await User.findOne({ $or: [{ name }, { email }] });
+  const findUser = await User.findOne({ $or: [{ name }, { email: name }] });
+  
 
   if (findUser) {
     const checkPassword = await verifyPassword(password, findUser.password);

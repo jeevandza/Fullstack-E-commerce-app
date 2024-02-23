@@ -5,6 +5,7 @@ import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import { store } from "./utils/reducers/store";
+import { ToastContainer, toast } from "react-toastify";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,6 +14,7 @@ root.render(
       <ChakraProvider>
         <App />
       </ChakraProvider>
+      <ToastContainer />
     </Provider>
   </React.StrictMode>
 );
