@@ -5,9 +5,12 @@ const jwt = require("jsonwebtoken");
 
 const authRouter = Router();
 
+/**
+ * To login use based on user-name/email and the password
+ */
 authRouter.post("/login", async (req, res) => {
   const { name, password } = req.body;
-  const findUser = await User.findOne({ name });
+  const findUser = await User.findOne({ $or: [{ name }, { email }] });
 
   if (findUser) {
     const checkPassword = await verifyPassword(password, findUser.password);
@@ -37,6 +40,9 @@ authRouter.post("/login", async (req, res) => {
   }
 });
 
+/**
+ * Signup user or create new user
+ */
 authRouter.post("/signup", async (req, res) => {
   const { name, password, email } = req.body;
 
@@ -61,6 +67,5 @@ authRouter.post("/signup", async (req, res) => {
     });
   }
 });
-
 
 module.exports = authRouter;
