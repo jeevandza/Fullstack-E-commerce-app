@@ -10,6 +10,7 @@ const { connectDatabase } = require("./database/index.js");
 const BodyParser = require("body-parser");
 const Cors = require("cors");
 const jwt = require('jsonwebtoken');
+const { verifyToken } = require ("./utils/helper.js");
 // const logger = require('./utils/config/logger.js')
 
 connectDatabase();
@@ -28,6 +29,17 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT,PATCH, DELETE");
   next();
 });
+
+/**
+ * Check for access token in headers skip for login and signup routes
+ */
+app.use((req, res, next)=>{
+  if(req.path !== "/v1/login" && req.path !== '/v1/signup'){
+    verifyToken(req, res, next)
+  }else{
+    next()
+  }
+})
 
 app.use("/v1/auth", authRouter);
 app.use("/v1/profile", profileRouter);
