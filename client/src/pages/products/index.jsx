@@ -23,7 +23,7 @@ export function Products() {
 
   return (
     <>
-      <Box>
+      <Box mb="300px">
         <Box
           p="4"
           display="flex"
@@ -52,9 +52,9 @@ export function Products() {
             />
           </Box>
         </Box>
-        <Flex justifyContent="center" h="100%" w="100%" wrap="wrap" px="4px">
+        <Flex justifyContent="center" flexWrap="wrap"  h="100%" w="100%" px="4px">
           {productList.map((product) => {
-            return <Box px="4px"><Product data={product} /></Box>;
+            return <Product data={product} />
           })}
         </Flex>
       </Box>

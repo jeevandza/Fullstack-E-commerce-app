@@ -1,79 +1,65 @@
-'use client'
+"use client";
 
-import {
-  Box,
-  Center,
-  useColorModeValue,
-  Heading,
-  Text,
-  Stack,
-  Image,
-} from '@chakra-ui/react'
+import { Box, Text, Image, Flex } from "@chakra-ui/react";
 
 const IMAGE =
-  'https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+  "https://images.unsplash.com/photo-1682685797208-c741d58c2eff?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
-export  function Product({data}) {
+export function Product({ data }) {
   return (
-    <Center py={12}>
-      <Box
-        role={'group'}
-        p={6}
-        maxW={'330px'}
-        w={'full'}
-        bg={useColorModeValue('white', 'gray.800')}
-        boxShadow={'2xl'}
-        rounded={'lg'}
-        pos={'relative'}
-        zIndex={1}>
-        <Box
-          rounded={'lg'}
-          mt={-12}
-          pos={'relative'}
-          height={'230px'}
-          _after={{
-            transition: 'all .3s ease',
-            content: '""',
-            w: 'full',
-            h: 'full',
-            pos: 'absolute',
-            top: 5,
-            left: 0,
-            backgroundImage: `url(${IMAGE})`,
-            filter: 'blur(15px)',
-            zIndex: -1,
-          }}
-          _groupHover={{
-            _after: {
-              filter: 'blur(20px)',
-            },
-          }}>
-          <Image
-            rounded={'lg'}
-            height={230}
-            width={282}
-            objectFit={'cover'}
-            src={IMAGE}
-            alt="#"
-          />
-        </Box>
-        <Stack pt={10} align={'center'}>
-          <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
+    <Box
+      width="250px"
+      height="300px"
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      border="0.5px solid gray"
+      p="8px"
+      borderRadius="16px"
+      m="4px"
+    >
+      <Image
+        rounded="lg"
+        height={150}
+        width={230}
+        objectFit="cover"
+        src={IMAGE}
+        alt="#"
+      />
+      <Box>
+        <Flex alignItems="center">
+          <Text color="black" fontSize="18px">
+            Type:
+          </Text>
+          <Text color="gray" marginLeft="8px" fontSize="12px">
             {data.type}
           </Text>
-          <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
+        </Flex>
+        <Flex alignItems="center">
+          <Text color="black" fontSize="18px">
+            Name:
+          </Text>
+          <Text color="gray" marginLeft="8px" fontSize="12px">
             {data.name}
-          </Heading>
-          <Stack direction={'row'} align={'center'}>
-            <Text fontWeight={800} fontSize={'xl'}>
-              ${data.price}
-            </Text>
-            <Text textDecoration={'line-through'} color={'gray.600'}>
-              ${data.price + 500}
-            </Text>
-          </Stack>
-        </Stack>
+          </Text>
+        </Flex>
+        <Flex alignItems="center">
+          <Text color="black" fontSize="18px">
+            Price:
+          </Text>
+          <Text color="gray" marginLeft="8px" fontSize="12px">
+            {data.price}
+          </Text>
+        </Flex>
+        <Flex alignItems="center">
+          <Text color="black" fontSize="18px">
+            Description:
+          </Text>
+          <Text color="gray" marginLeft="8px" fontSize="12px" whiteSpace="wrap">
+            {data.description.slice(0, 20)}
+          </Text>
+        </Flex>
       </Box>
-    </Center>
-  )
+    </Box>
+  );
 }

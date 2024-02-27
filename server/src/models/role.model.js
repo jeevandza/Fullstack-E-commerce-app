@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+const { Schema, mongoose } = require("mongoose");
 
 const RoleSchema = mongoose.Schema({
   roleName: {
@@ -12,6 +11,13 @@ const RoleSchema = mongoose.Schema({
   },
   createdBy: {
     type: String,
+    userId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "product_types",
+      },
+    ],
+    required: true,
   },
   updatedBy: {
     type: String,
@@ -27,4 +33,4 @@ const RoleSchema = mongoose.Schema({
 
 const Role = mongoose.models.role || mongoose.model("role", RoleSchema);
 
-module.exports =  Role;
+module.exports = Role;

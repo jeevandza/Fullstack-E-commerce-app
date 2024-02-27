@@ -1,65 +1,69 @@
-import React from "react";
-import { Flex, Button, Box } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Flex, Button, Box, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { DataTable } from "../../components/dataTable";
 import { createColumnHelper } from "@tanstack/react-table";
+import axios from 'axios'
 
 
 export function HomePage() {
   const navigate = useNavigate();
+  const [userList, setUserList] = useState([])
 
 
 
-  const data = [ {
-    fromUnit: "inches",
-    toUnit: "millimetres (mm)",
-    factor: 25.4
-  },
-  {
-    fromUnit: "feet",
-    toUnit: "centimetres (cm)",
-    factor: 30.48
-  },
-  {
-    fromUnit: "yards",
-    toUnit: "metres (m)",
-    factor: 0.91444
-  }]
 
 
   const columnHelper = createColumnHelper();
 
   const columns = [
-    columnHelper.accessor("fromUnit", {
+    columnHelper.accessor("name", {
       cell: (info) => info.getValue(),
-      header: "To convert"
+      header: "Name"
     }),
-    columnHelper.accessor("toUnit", {
+    columnHelper.accessor("email", {
       cell: (info) => info.getValue(),
-      header: "Into"
+      header: "Email"
     }),
-    columnHelper.accessor("factor", {
+    columnHelper.accessor("status", {
       cell: (info) => info.getValue(),
-      header: "Multiply by",
+      header: "Status"
+    }),
+    columnHelper.accessor("createdAt", {
+      cell: (info) => info.getValue(),
+      header: "Created on",
       meta: {
         isNumeric: true
       }
     })
   ];
+
+  const getUserList = async()=>{
+    try{
+      const response = await axios.get("http://localhost:4001/v1/users");
+      if(response){
+        setUserList(response.data.data)
+      }
+    }catch(err){
+      throw new Error(err)
+    }
+  }
+
+  useEffect(()=>{
+    getUserList()
+  },[])
+
+
+
+
+
     return (
     <Box>
-      <Flex w="100" justifyContent="center">
-        <Button
-          onClick={() => navigate("/products")}
-          type="button"
-          variant="primary"
-          b="1px"
-        >
-          Goto products listing
-        </Button>
+      <Flex w="100" justifyContent="end" px="10px">
       </Flex>
       <Box>
-        <DataTable data={data} columns={columns} />
+      <Text px="10px" fontSize='3xl'>Users</Text>
+        <DataTable data={userList} columns={columns} />
       </Box>
     </Box>
   );

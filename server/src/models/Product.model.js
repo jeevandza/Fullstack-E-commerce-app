@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const { Schema, mongoose } = require("mongoose");
 
 const ProductModel = mongoose.Schema({
   name: {
@@ -13,9 +13,19 @@ const ProductModel = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  type: {
+  typOfProduct: {
     type: String,
-    required: true,
+    product_type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "product_types",
+      },
+    ],
+    required:true,
+  },
+  brandCategory:{
+    type:String,
+    required:true,
   },
   price: {
     type: Number,
@@ -31,7 +41,13 @@ const ProductModel = mongoose.Schema({
     type: String,
   },
   createdBy: {
-    id: String,
+    type: String,
+    userId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    ],
   },
   createdAt: {
     type: Date,
@@ -43,6 +59,12 @@ const ProductModel = mongoose.Schema({
   },
   updatedBy: {
     type: String,
+    userId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    ],
   },
 });
 

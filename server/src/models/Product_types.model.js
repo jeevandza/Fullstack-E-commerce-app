@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const  { Schema, mongoose } = require("mongoose");
 
 const ProductTypeSchema = mongoose.Schema({
   name: {
@@ -7,9 +7,21 @@ const ProductTypeSchema = mongoose.Schema({
   },
   createdBy: {
     type: String,
+    userId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    ],
   },
   updatedBy: {
     type: String,
+    userId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    ],
   },
   createdAt: {
     type: Date,
@@ -22,6 +34,7 @@ const ProductTypeSchema = mongoose.Schema({
 });
 
 const ProductTypes =
-  mongoose.models.product_types || mongoose.model("product_types", ProductTypeSchema);
+  mongoose.models.product_types ||
+  mongoose.model("product_types", ProductTypeSchema);
 
 module.exports = ProductTypes;

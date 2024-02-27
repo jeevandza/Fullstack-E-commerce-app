@@ -8,7 +8,6 @@ export function Layout({ children }) {
   const navigation = useNavigate();
   useEffect(() => {
     const isUserPresent = localStorage.getItem("user");
-    console.log(isUserPresent, "isUserPresent");
     if (!isUserPresent) {
       navigation("/auth");
     }
@@ -21,14 +20,18 @@ export function Layout({ children }) {
       </Box>
       <Box
         overflow="scroll"
-        width="100%"
-        height="100%"
+        width="100vw"
+        height="100vh "
         mt="100px"
-        marginBottom="120px"
       >
         {children}
       </Box>
-      <Box width="100%" position="fixed" bottom="0" height="120px" >
+      <Box
+        width="100%"
+        position="fixed"
+        bottom="0"
+        height="120px"
+      >
         <Footer />
       </Box>
     </Box>

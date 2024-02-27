@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+const  { Schema, mongoose } = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 
 const UserSchema = mongoose.Schema({
   name: {
@@ -16,10 +18,21 @@ const UserSchema = mongoose.Schema({
   },
   role: {
     type: String,
+    roleType: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "product_types",
+      },
+    ],
+    required:true,
   },
-  isFirstTime:{
-    type:Boolean,
+  isFirstTime: {
+    type: Boolean,
     default: true,
+  },
+  status: {
+    type: String,
+    default: "Active",
   },
   createdBy: {
     id: String,
@@ -35,5 +48,8 @@ const UserSchema = mongoose.Schema({
 });
 
 const User = mongoose.models.users || mongoose.model("users", UserSchema);
+// User.plugin(mongoosePaginate);
+// User.paginate({}, options, function(err,result){}); 
+
 
 module.exports = User;
