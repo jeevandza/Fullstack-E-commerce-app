@@ -48,7 +48,7 @@ productRouter.get("/:id", async (req, res) => {
  * To create a product
  */
 productRouter.post("", async (req, res) => {
-  const { name, description, published, price, rating, type, userId } =
+  const { name, description, published, price, rating, type, userId, typOfProduct, brandCategory,otherDetails  } =
     req.body;
   const checkProduct = await Product.findOne({ name });
   if (checkProduct) {
@@ -70,6 +70,9 @@ productRouter.post("", async (req, res) => {
         price,
         rating,
         type,
+        typOfProduct,
+        brandCategory,
+        otherDetails,
         createdBy: userId,
       });
       return res.send({
@@ -150,7 +153,7 @@ productRouter.delete("/list", (req, res) => {
  * To get the list based on query params
  */
 productRouter.get("", async (req, res) => {
-  const { published, name } = req.query;
+  const { published, name } = req.e;
   console.log(published, name, "name");
   const findProduct = await Product.find({ $or: [{ published, name }] });
   if (findProduct) {

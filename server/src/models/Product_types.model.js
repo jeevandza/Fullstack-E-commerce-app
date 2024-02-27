@@ -1,4 +1,4 @@
-const  { Schema, mongoose } = require("mongoose");
+const { Schema, mongoose } = require("mongoose");
 
 const ProductTypeSchema = mongoose.Schema({
   name: {
@@ -6,22 +6,13 @@ const ProductTypeSchema = mongoose.Schema({
     required: true,
   },
   createdBy: {
-    type: String,
-    userId: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "users",
-      },
-    ],
+    type: Schema.Types.ObjectId,
+    ref: "users",
+    required: true,
   },
   updatedBy: {
-    type: String,
-    userId: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "users",
-      },
-    ],
+    type: Schema.Types.ObjectId,
+    ref: "users",
   },
   createdAt: {
     type: Date,

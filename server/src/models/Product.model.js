@@ -14,22 +14,17 @@ const ProductModel = mongoose.Schema({
     default: false,
   },
   typOfProduct: {
-    type: String,
-    product_type: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "product_types",
-      },
-    ],
-    required:true,
+    type: Schema.Types.ObjectId,
+    ref: "product_types",
+    required: false,
   },
-  brandCategory:{
-    type:String,
-    required:true,
+  brandCategory: {
+    type: String,
+    required: false,
   },
   price: {
     type: Number,
-    required: true,
+    required: false,
   },
   currency: {
     type: String,
@@ -40,14 +35,13 @@ const ProductModel = mongoose.Schema({
   image: {
     type: String,
   },
+  otherDetails: {
+    type: [mongoose.Schema.Types.Mixed],
+    require: false,
+  },
   createdBy: {
-    type: String,
-    userId: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "users",
-      },
-    ],
+    type: Schema.Types.ObjectId,
+    ref: "users",
   },
   createdAt: {
     type: Date,
@@ -58,13 +52,8 @@ const ProductModel = mongoose.Schema({
     default: new Date(),
   },
   updatedBy: {
-    type: String,
-    userId: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "users",
-      },
-    ],
+    type: Schema.Types.ObjectId,
+    ref: "users",
   },
 });
 

@@ -7,7 +7,7 @@ const roleRouter = Router();
  * To create roles for the application
  */
 roleRouter.post("", async (req, res) => {
-  const { name, type, userId } = req.body;
+  const { name, type, userId, createdBy } = req.body;
 
   const findRole = await Role.findOne({ $and: [{ name, type }] });
 

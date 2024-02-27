@@ -10,13 +10,8 @@ const RoleSchema = mongoose.Schema({
     required: true,
   },
   createdBy: {
-    type: String,
-    userId: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "product_types",
-      },
-    ],
+    type: Schema.Types.ObjectId,
+    ref: "users",
     required: true,
   },
   updatedBy: {
