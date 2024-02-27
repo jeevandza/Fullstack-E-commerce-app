@@ -5,7 +5,7 @@ const { hashPassword } = require("../utils/helper");
 const userRouter = Router();
 
 /**
- * To get the list of users
+ * To get the list of users 
  */
 userRouter.get("", async (req, res) => {
   const fetchUser = await User.find();
@@ -27,9 +27,12 @@ userRouter.get("/:id", async (req, res) => {
   if (fetchUser) {
     return res.status(200).send({ msg: "User data", data: fetchUser });
   } else {
-    return res.status(400).send({ msg: "No user found" });
+    return res
+      .status(400)
+      .send({ msg: "No user found"});
   }
 });
+
 
 /**
  * To create user post method
@@ -52,6 +55,7 @@ userRouter.post("", async (req, res) => {
     return res.status(200).send({ msg: "User created successfully" });
   }
 });
+
 
 /**
  * To update specific user based on the id of the user
@@ -79,6 +83,7 @@ userRouter.patch("/:id", async (req, res) => {
     res.status(400).send({ msg: "Invalid credentials" });
   }
 });
+
 
 /**
  * To delete user from the database(hard delete)

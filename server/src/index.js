@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
  * Check for access token in headers skip for login and signup routes
  */
 app.use((req, res, next)=>{
-  if(req.path !== "/v1/login" && req.path !== '/v1/signup'){
+  if(req.path !== "/v1/auth/login" && req.path !== '/v1/auth/signup'){
     verifyToken(req, res, next)
   }else{
     next()
