@@ -13,12 +13,10 @@ const UserSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   role: {
     type: Schema.Types.ObjectId,
-    ref: "product_types",
-    required: true,
+    ref: "role",
   },
   isFirstTime: {
     type: Boolean,

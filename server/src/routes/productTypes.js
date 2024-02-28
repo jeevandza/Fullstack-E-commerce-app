@@ -7,17 +7,17 @@ const productTypeRouter = Router();
  * To create product types 
  */
 productTypeRouter.post("", async (req, res) => {
-  const { name, id } = req.body;
+  const { name, id, createdBy } = req.body;
   const findProductType = await ProductTypes.findOne({ name });
 
   if (findProductType) res.status(400).send("Product type already exists");
   else {
     const newType = await ProductTypes.create({
       name: name,
-      createBy: id,
+      createdBy,
     });
     newType.save();
-    return res.status(200).send("Created product successfully");
+    return res.status(200).send("Created product type successfully");
   }
 });
 

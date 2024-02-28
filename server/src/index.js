@@ -11,6 +11,7 @@ const BodyParser = require("body-parser");
 const Cors = require("cors");
 const jwt = require('jsonwebtoken');
 const { verifyToken } = require ("./utils/helper.js");
+const path = require("path")
 // const logger = require('./utils/config/logger.js')
 
 connectDatabase();
@@ -22,6 +23,8 @@ app.use(express.json());
 app.use(Cors());
 app.use(BodyParser.urlencoded({ extended: false }));
 app.use(BodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

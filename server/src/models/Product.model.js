@@ -32,7 +32,7 @@ const ProductModel = mongoose.Schema({
   rating: {
     type: Number,
   },
-  image: {
+  productImage: {
     type: String,
   },
   otherDetails: {

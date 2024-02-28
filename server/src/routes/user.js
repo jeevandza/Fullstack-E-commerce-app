@@ -1,11 +1,12 @@
 const { Router } = require("express");
 const User = require("../models/User.model");
+const Role = require("../models/Role.model");
 const { hashPassword } = require("../utils/helper");
 
 const userRouter = Router();
 
 /**
- * To get the list of users 
+ * To get the list of users
  */
 userRouter.get("", async (req, res) => {
   const fetchUser = await User.find();
@@ -27,18 +28,24 @@ userRouter.get("/:id", async (req, res) => {
   if (fetchUser) {
     return res.status(200).send({ msg: "User data", data: fetchUser });
   } else {
-    return res
-      .status(400)
-      .send({ msg: "No user found"});
+    return res.status(400).send({ msg: "No user found" });
   }
 });
-
 
 /**
  * To create user post method
  */
 userRouter.post("", async (req, res) => {
-  const { name, email, roleId, userId } = req.body;
+  const { name, email, role, createdBy } = req.body;
+
+  const findCreator = await User.findOne({ _id: createdBy });
+
+  const creatorRole = await Role.findOne({ _id: findCreator.role });
+
+  console.log(creatorRole, "creatorRole");
+
+  if (creatorRole.roleType !== "admin")
+    return res.status(400).send({ msg: "Only admins can add users" });
 
   const checkUser = await User.findOne({ email });
   if (checkUser) {
@@ -47,22 +54,20 @@ userRouter.post("", async (req, res) => {
     const newUser = await User.create({
       name,
       email,
-      role: roleId,
-      password: "12345",
-      createdBy: userId,
+      role,
+      createdBy,
     });
     newUser.save();
     return res.status(200).send({ msg: "User created successfully" });
   }
 });
 
-
 /**
  * To update specific user based on the id of the user
  */
 userRouter.patch("/:id", async (req, res) => {
   const { id: _id } = req.params;
-  const { name, email, password, isFirstTime, userId } = req.body;
+  const { name, email, isFirstTime, role, updatedBy } = req.body;
 
   const findUser = await User.findOne({ _id });
 
@@ -71,19 +76,21 @@ userRouter.patch("/:id", async (req, res) => {
       name,
       email,
       isFirstTime,
-      password: await hashPassword(password),
-      userId: !_id ? userId : userId,
+      role,
     };
     await User.updateOne(
       { _id },
-      { $set: updateUser, updatedAt: new Date(), updatedBy: userId }
+      {
+        $set: updateUser,
+        updatedAt: new Date(),
+        updatedBy: updatedBy ? updatedBy : User.updatedBy,
+      }
     );
     return res.status(200).send({ msg: "User updated successfully" });
   } else {
     res.status(400).send({ msg: "Invalid credentials" });
   }
 });
-
 
 /**
  * To delete user from the database(hard delete)

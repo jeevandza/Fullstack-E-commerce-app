@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const Role = require("../models/role.model");
+const Role = require("../models/Role.model");
 
 const roleRouter = Router();
 
@@ -7,7 +7,7 @@ const roleRouter = Router();
  * To create roles for the application
  */
 roleRouter.post("", async (req, res) => {
-  const { name, type, userId, createdBy } = req.body;
+  const { name, type, createdBy } = req.body;
 
   const findRole = await Role.findOne({ $and: [{ name, type }] });
 
@@ -16,7 +16,7 @@ roleRouter.post("", async (req, res) => {
     const createRole = await Role.create({
       roleName:name,
       roleType:type,
-      createdBy: userId,
+      createdBy,
     });
     createRole.save();
     return res.status(200).send({ msg: "Role created successfully" });
