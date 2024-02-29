@@ -11,7 +11,8 @@ const BodyParser = require("body-parser");
 const Cors = require("cors");
 const { verifyToken } = require("./utils/helper.js");
 const path = require("path");
-const logger = require('./utils/config/logger.js')
+const logger = require('./utils/config/logger.js');
+const downloadCsvRoute = require("./routes/csvDownload.js");
 
 connectDatabase();
 
@@ -48,13 +49,13 @@ const requestLoggerMiddleware = (req, res, next) => {
 /**
  * Check for access token in headers skip for login and signup routes
  */
-app.use((req, res, next) => {
-  if (req.path !== "/v1/auth/login" && req.path !== "/v1/auth/signup") {
-    verifyToken(req, res, next);
-  } else {
-    next();
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.path !== "/v1/auth/login" && req.path !== "/v1/auth/signup") {
+//     verifyToken(req, res, next);
+//   } else {
+//     next();
+//   }
+// });
 
 app.use("/v1/auth", authRouter);
 app.use("/v1/profile", profileRouter);
@@ -62,6 +63,7 @@ app.use("/v1/product/list", productRouter);
 app.use("/v1/product_types", productTypeRouter);
 app.use("/v1/role", roleRouter);
 app.use("/v1/users", userRouter);
+app.use("/v1/download", downloadCsvRoute)
 
 /**
  * Create a middleware to log errors
