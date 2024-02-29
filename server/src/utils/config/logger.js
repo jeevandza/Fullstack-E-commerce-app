@@ -1,7 +1,7 @@
 const winston = require("winston");
 const path = require("path") ;
 
-const logFilePath = path.join(__dirname, "logs");
+const logFilePath = path.join(__dirname, "../../../public/logs");
 
 const { combine, timestamp, json, printf } = winston.format;
 
