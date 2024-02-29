@@ -42,7 +42,6 @@ userRouter.post("", async (req, res) => {
 
   const creatorRole = await Role.findOne({ _id: findCreator.role });
 
-  console.log(creatorRole, "creatorRole");
 
   if (creatorRole.roleType !== "admin")
     return res.status(400).send({ msg: "Only admins can add users" });

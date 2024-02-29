@@ -15,21 +15,40 @@ const uploadImages = multer({
  */
 
 productRouter.get("", async (req, res, next) => {
-  // verifyToken(req, res, next)
-  const productList = await Product.find();
-  if (productList) {
-    return res.send({
-      status: 200,
-      msg: "Product List",
-      data: productList,
-    });
-  } else {
-    return res.send({
-      status: 400,
-      msg: "No list found",
+  try {
+    const { name = '', sortBy = 'name', sortOrder = 'asc' } = req.query;
+
+    const filter = {};
+    if (name) {
+      filter.name = { $regex: new RegExp(name, 'i') }; 
+    }
+
+    const sort = {};
+    sort[sortBy] = sortOrder === 'asc' ? 1 : -1;
+
+    const productList = await Product.find(filter).sort(sort);
+
+    if (productList.length > 0) {
+      return res.status(200).send({
+        status: 200,
+        msg: "Product List",
+        data: productList,
+      });
+    } else {
+      return res.status(404).send({
+        status: 404,
+        msg: "No products found",
+      });
+    }
+  } catch (error) {
+    console.error("Error retrieving products:", error);
+    return res.status(500).send({
+      status: 500,
+      msg: "Internal server error",
     });
   }
 });
+
 
 /**
  * To get product based on product id
@@ -197,7 +216,6 @@ productRouter.delete("/list", (req, res) => {
  */
 productRouter.get("", async (req, res) => {
   const { published, name } = req.params;
-  console.log(published, name, "name");
   const findProduct = await Product.find({ $or: [{ published, name }] });
   if (findProduct) {
     return res.send({
