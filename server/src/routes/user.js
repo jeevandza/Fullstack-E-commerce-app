@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const User = require("../models/User.model");
 const Role = require("../models/Role.model");
-const { hashPassword } = require("../utils/helper");
+const { validateUser } = require(".././models/User.model.js");
+const { validateMiddleware } = require(".././utils/config/validate.js");
 
 const userRouter = Router();
 
@@ -38,7 +39,7 @@ userRouter.get("/:id", async (req, res) => {
 userRouter.post("", async (req, res) => {
   const { name, email, role, createdBy } = req.body;
 
-  const creatorRole = await Role.findOne({ _id: role});
+  const creatorRole = await Role.findOne({ _id: role });
 
   if (creatorRole.roleType !== "admin")
     return res.status(400).send({ msg: "Only admins can add users" });

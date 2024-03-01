@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const authRouter = require("./routes/auth.js");
 const profileRouter = require("./routes/profile.js");
@@ -5,14 +6,14 @@ const productRouter = require("./routes/product.js");
 const productTypeRouter = require("./routes/productTypes.js");
 const roleRouter = require("./routes/role_types.js");
 const userRouter = require("./routes/user.js");
-require("dotenv").config();
 const { connectDatabase } = require("./database/index.js");
 const BodyParser = require("body-parser");
 const Cors = require("cors");
 const { verifyToken } = require("./utils/helper.js");
 const path = require("path");
-const logger = require('./utils/config/logger.js');
+const logger = require("./utils/config/logger.js");
 const downloadCsvRoute = require("./routes/csvDownload.js");
+
 
 connectDatabase();
 
@@ -63,7 +64,7 @@ app.use("/v1/product/list", productRouter);
 app.use("/v1/product_types", productTypeRouter);
 app.use("/v1/role", roleRouter);
 app.use("/v1/users", userRouter);
-app.use("/v1/download", downloadCsvRoute)
+app.use("/v1/download", downloadCsvRoute);
 
 /**
  * Create a middleware to log errors
