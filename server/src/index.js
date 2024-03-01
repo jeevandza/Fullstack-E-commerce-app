@@ -50,13 +50,13 @@ const requestLoggerMiddleware = (req, res, next) => {
 /**
  * Check for access token in headers skip for login and signup routes
  */
-// app.use((req, res, next) => {
-//   if (req.path !== "/v1/auth/login" && req.path !== "/v1/auth/signup") {
-//     verifyToken(req, res, next);
-//   } else {
-//     next();
-//   }
-// });
+app.use((req, res, next) => {
+  if (req.path !== "/v1/auth/login" && req.path !== "/v1/auth/signup") {
+    verifyToken(req, res, next);
+  } else {
+    next();
+  }
+});
 
 app.use("/v1/auth", authRouter);
 app.use("/v1/profile", profileRouter);
